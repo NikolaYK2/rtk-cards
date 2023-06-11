@@ -1,0 +1,13 @@
+//h1 для окон/переменные
+$FontColor:#000;
+
+
+
+//h1 для окон
+%Hfont{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  height: 32px;
+  color: $FontColor;
+}

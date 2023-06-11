@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: local('./monserat/weight500/Montserrat-Medium.eot');
+  src: url('./monserat/weight500/Montserrat-Medium.eot?#iefix') format('embedded-opentype'),
+  url('./monserat/weight500/Montserrat-Medium.woff2') format('woff2'),
+  url('./monserat/weight500/Montserrat-Medium.woff') format('woff'),
+  url('./monserat/weight500/Montserrat-Medium.ttf') format('truetype'),
+  url('./monserat/weight500/Montserrat-Medium.svg#Montserrat-Medium') format('svg');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('./monserat/weight400/Montserrat-Regular.eot');
+  src: url('./monserat/weight400/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
+  url('./monserat/weight400/Montserrat-Regular.woff2') format('woff2'),
+  url('./monserat/weight400/Montserrat-Regular.woff') format('woff'),
+  url('./monserat/weight400/Montserrat-Regular.ttf') format('truetype'),
+  url('./monserat/weight400/Montserrat-Regular.svg#Montserrat-Regular') format('svg');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('./monserat/weight600/Montserrat-SemiBold.eot');
+  src: url('./monserat/weight600/Montserrat-SemiBold.eot?#iefix') format('embedded-opentype'),
+  url('./monserat/weight600/Montserrat-SemiBold.woff2') format('woff2'),
+  url('./monserat/weight600/Montserrat-SemiBold.woff') format('woff'),
+  url('./monserat/weight600/Montserrat-SemiBold.ttf') format('truetype'),
+  url('./monserat/weight600/Montserrat-SemiBold.svg#Montserrat-SemiBold') format('svg');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
