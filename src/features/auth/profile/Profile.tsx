@@ -11,10 +11,10 @@ export const Profile = () => {
   const emailRes = useAppSelector((state) => state.auth.profile?.email);
   const nameRes = useAppSelector((state) => state.auth.profile?.name);
   const dispatch = useAppDispatch();
-  console.log(nameRes);
 
+  console.log(nameRes);
   const [changeName, setChangeName] = useState(true);
-  const [name, setName] = useState('');
+  const [name, setName] = useState(nameRes);
 
   const changeNameHandle = () => {
     setChangeName(false);
@@ -23,7 +23,10 @@ export const Profile = () => {
     setName(e.currentTarget.value);
   };
   const changeNameBlurHandle = () => {
-    if (name !== "") setChangeName(true);
+    if (name !== "") {
+      setChangeName(true);
+    }
+    dispatch(authThunks.authUpdateUser({name: name ?? name}))
   };
   const nameDownHandle = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -62,10 +65,10 @@ export const Profile = () => {
               onBlur={changeNameBlurHandle}
               onChange={newNameHandle}
               onKeyDown={nameDownHandle}
-              value={nameRes}
+              value={name ?? nameRes}
             />
             <label className={nameRes ? sAuth.modLabel : ""}>Nickname</label>
-            <p>{nameRes === "" ? field : ""}</p>
+            <p>{nameRes === "" ?? field}</p>
             <button className={sAuth.save} onClick={saveName}>
               SAVE
             </button>

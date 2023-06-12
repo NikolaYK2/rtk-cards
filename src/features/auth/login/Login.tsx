@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import sLog from "assets/SCSS/styleContinerAuth.module.scss";
 import { Navigate, NavLink } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { AuthApiType, field, validEmail } from "features/auth/auth.api";
+import { ArgLoginType, field, validEmail } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
 
 export const Login = () => {
@@ -22,7 +22,7 @@ export const Login = () => {
     reset,
     watch,
     formState: { errors, isValid,},
-  } = useForm<AuthApiType>({
+  } = useForm<ArgLoginType>({
     mode: "onBlur",
     defaultValues: {
       email: "",
@@ -31,7 +31,7 @@ export const Login = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<AuthApiType> = (data) => {
+  const onSubmit: SubmitHandler<ArgLoginType> = (data) => {
     dispatch(authThunks.login(data));
     reset();
   };

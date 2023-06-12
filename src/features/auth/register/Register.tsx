@@ -3,10 +3,10 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import sAuth from "assets/SCSS/styleContinerAuth.module.scss";
 import { NavLink, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { AuthApiType, field, validEmail } from "features/auth/auth.api";
+import { ArgRegisterType, field, validEmail } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
 
-type RepeatRasType = AuthApiType & {
+type RepeatRasType = ArgRegisterType & {
   repeatPassword: string;
 };
 export const Register = () => {
@@ -30,7 +30,7 @@ export const Register = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<AuthApiType> = (data) => {
+  const onSubmit: SubmitHandler<ArgRegisterType> = (data) => {
     dispatch(authThunks.register(data));
     reset();
   };

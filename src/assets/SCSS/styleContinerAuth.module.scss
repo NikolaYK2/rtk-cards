@@ -15,10 +15,23 @@
 
   //Profile -----------------------------------
   .name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;
     color: $FontColor;
+
+    &:after {
+      content: '';
+      text-align: right;
+      margin: 0 0 0 8px;
+      width: 16px;
+      height: 16px;
+      background: url("../img/prof/changeName.png") 0 0 /cover no-repeat;
+    }
   }
 
   @extend %input;
@@ -37,7 +50,7 @@
     right: 0;
     background: #366EFF;
     border-radius: 2px;
-    padding:  0 10px;
+    padding: 0 10px;
     height: 24px;
 
     font-weight: 400;
@@ -138,7 +151,8 @@
       margin: 11px 0 0;
     }
   }
-  .disabl{
+
+  .disabl {
     opacity: 0.2;
   }
 }

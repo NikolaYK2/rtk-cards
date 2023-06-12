@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { authApi, AuthApiType, LoginResponseType } from "features/auth/auth.api";
+import {
+  ArgLoginType,
+  ArgRegisterType,
+  authApi,
+  ProfileType,
+} from "features/auth/auth.api";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 
 //THUNK -------------------------------------------------------------
@@ -11,10 +16,10 @@ const register = createAsyncThunk(
   // (если параметров больше чем один упаковываем их в объект)
   // - вторым параметром thunkAPI, обратившись к которому получим dispatch и др. свойства
   // https://redux-toolkit.js.org/usage/usage-with-typescript#typing-the-thunkapi-object
-  (arg: AuthApiType, thunkAPI) => {
+  (arg: ArgRegisterType, thunkAPI) => {
     const { dispatch } = thunkAPI;
     authApi.register(arg).then((res) => {
-      dispatch(authActions.setProfile({ profile: res.data }));
+      dispatch(authActions.setProfile({ profile: res.data.addedUser }));
       dispatch(authActions.isLogged({ isLogged: true }));
     });
   }
@@ -48,40 +53,44 @@ const register = createAsyncThunk(
 //   // return { profile: res.data };
 // });
 //Просто Reducer ------------------------------------------------------
-const login = createAppAsyncThunk("auth/login", async (arg: AuthApiType, thunkAPI) => {
+const login = createAppAsyncThunk("auth/login", async (arg: ArgLoginType, thunkAPI) => {
   const { dispatch } = thunkAPI;
   const res = await authApi.login(arg);
-  dispatch(authThunks.authMe())
+  dispatch(authThunks.authMe());
   dispatch(authActions.isLogged({ isLogged: true }));
-  // dispatch(authActions.setProfile({ profile: res.data }));
-  // return { profile: res.data };
+  dispatch(authActions.setProfile({ profile: res.data }));
 });
 
 const authMe = createAppAsyncThunk("auth/me", async (arg, thunkAPI) => {
   const { dispatch } = thunkAPI;
   const res = await authApi.me();
   dispatch(authActions.isLogged({ isLogged: true }));
-  dispatch(authActions.setProfile({ profile: res.data}));
-  // return { profile: res.data };
+  dispatch(authActions.setProfile({ profile: res.data }));
 });
 
 const logout = createAppAsyncThunk("auth/me", async (arg, thunkAPI) => {
   const { dispatch } = thunkAPI;
   const res = await authApi.logout();
-  dispatch(authActions.clearProfile());//Очищаем на профайл
+  dispatch(authActions.clearProfile()); //Очищаем на профайл
   dispatch(authActions.isLogged({ isLogged: false }));
   // return { profile: res.data };
+});
+
+const authUpdateUser = createAppAsyncThunk("auth/updateProfile", async (data: ProfileType, thunkAPI) => {
+  const { dispatch } = thunkAPI;
+  const res = await authApi.updUser(data);
+  dispatch(authActions.updateUser({ profile: res.data.updatedUser }));
 });
 
 //STATE --------------------------------------------------------------
 const slice = createSlice({
   name: "auth",
   initialState: {
-    profile: null as LoginResponseType | null,
+    profile: null as ProfileType | null,
     isLogged: false, //Вход в систему
   },
   reducers: {
-    setProfile: (state, action: PayloadAction<{ profile: LoginResponseType }>) => {
+    setProfile: (state, action: PayloadAction<{ profile: ProfileType }>) => {
       state.profile = action.payload.profile;
     },
     clearProfile: (state) => {
@@ -89,6 +98,9 @@ const slice = createSlice({
     },
     isLogged: (state, action: PayloadAction<{ isLogged: boolean }>) => {
       state.isLogged = action.payload.isLogged;
+    },
+    updateUser: (state, action: PayloadAction<{ profile: ProfileType }>) => {
+      state.profile = action.payload.profile;
     },
   },
   // extraReducers: (builder) => {
@@ -101,4 +113,4 @@ const slice = createSlice({
 export const authReducer = slice.reducer;
 export const authActions = slice.actions; //заходим в наши actions
 // Санки давайте упакуем в объект, нам это пригодится в дальнейшем
-export const authThunks = { register, login, logout, authMe };
+export const authThunks = { register, login, logout, authMe, authUpdateUser };
