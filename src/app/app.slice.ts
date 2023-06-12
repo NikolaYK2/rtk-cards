@@ -10,6 +10,17 @@ const isInitializedApp = createAppAsyncThunk("auth/me", async (arg, thunkAPI) =>
   dispatch(appActions.initializedApp({ isAppInitialized: true }));
   dispatch(authActions.isLogged({ isLogged: true }));
 });
+//хз ==========================================
+// const isInitializedApp = createAppAsyncThunk<{ isAppInitialized: boolean}, boolean>("app/init", async (arg) => {
+//   const res = await authApi.me();
+//   const isLog = await authThunks.isLogged(arg)
+//
+//   return {isAppInitialized: true,isLog};
+// });
+// const isLoading = createAppAsyncThunk<{ isLoading: boolean }, boolean>("app/isLoading", async (arg) => {
+//   const res = await authApi.me();
+//   return { isLoading: arg};
+// });
 
 const slice = createSlice({
   // name должен быть уникальным
@@ -34,6 +45,15 @@ const slice = createSlice({
       state.isAppInitialized = action.payload.isAppInitialized;
     },
   },
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(isInitializedApp.fulfilled, (state, action) => {
+  //       state.isAppInitialized = action.payload.isAppInitialized;
+  //     })
+  //     .addCase(isLoading.fulfilled, (state, action) => {
+  //       state.isLoading = action.payload.isLoading;
+  //     })
+  // },
 });
 
 // Создаем reducer с помощью slice

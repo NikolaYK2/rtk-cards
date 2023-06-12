@@ -3,8 +3,9 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import sAuth from "assets/SCSS/styleContinerAuth.module.scss";
 import { NavLink, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ArgRegisterType, field, validEmail } from "features/auth/auth.api";
+import { ArgRegisterType } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
+import { field, validEmail } from "common/utils/validate";
 
 type RepeatRasType = ArgRegisterType & {
   repeatPassword: string;
@@ -39,9 +40,9 @@ export const Register = () => {
   // };
 
 
-  if (isLogged) {
-    navigate("/profile");
-  }
+  // if (isLogged) {
+  //   return <Navigate to={'/profile'}/>
+  // }
 
   return (
     <div className={sAuth.container}>

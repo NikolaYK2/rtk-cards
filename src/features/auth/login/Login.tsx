@@ -3,8 +3,9 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import sLog from "assets/SCSS/styleContinerAuth.module.scss";
 import { Navigate, NavLink } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ArgLoginType, field, validEmail } from "features/auth/auth.api";
+import { ArgLoginType} from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
+import { field, validEmail } from "common/utils/validate";
 
 export const Login = () => {
   const isLogged = useAppSelector((state) => state.auth.isLogged);

@@ -13,18 +13,24 @@ import { Profile } from "features/auth/profile/Profile";
 
 export function App() {
   const isLoading = useAppSelector((state) => state.app.isLoading);
+  const initApp = useAppSelector((state) => state.app.isAppInitialized);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     setTimeout(() => {
+      // dispatch(appThunk.isLoading(false))
       dispatch(appActions.setIsLoading({ isLoading: false }));
     }, 3000);
-  }, []);
-
-  useEffect(() => {
-    //при старте приложения проверяем мы ли это
     dispatch(appThunk.isInitializedApp());
   }, []);
+
+  // if (!initApp) {
+  //   return (
+  //     <div>
+  //       <h1 style={{ fontSize: "100px" }}>Loading</h1>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="App">
@@ -37,6 +43,7 @@ export function App() {
         <Route path={"/check-email"} element={<CheckEmail />} />
         <Route path={"/forgot-password"} element={<ForgotPassword />} />
         <Route path={"/set-new-password"} element={<CreatePassword />} />
+        <Route path={"/set-new-password/:token"} element={<CreatePassword />} />
         <Route path={"/profile"} element={<Profile />} />
         {/*--------------------------------------------------------*/}
 

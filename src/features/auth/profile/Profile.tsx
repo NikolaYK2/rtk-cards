@@ -4,7 +4,7 @@ import avatar from "assets/img/prof/img.png";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Navigate } from "react-router-dom";
 import { authThunks } from "features/auth/auth.slice";
-import { field } from "features/auth/auth.api";
+import { field } from "common/utils/validate";
 
 export const Profile = () => {
   const isLogged = useAppSelector((state) => state.auth.isLogged);

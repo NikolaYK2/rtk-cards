@@ -3,10 +3,56 @@ import {
   ArgLoginType,
   ArgRegisterType,
   authApi,
+  ForgotType,
+  NewPasswordType,
   ProfileType,
+  UpdUser
 } from "features/auth/auth.api";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 
+//async login ----------------------------------------------------------------------
+//extraReducer -
+// const login = createAppAsyncThunk<
+//   // 1. То, что возвращает Thunk
+//   { profile: ProfileType },
+//   // 2. ThunkArg - аргументы санки (тип, который санка принимает)
+//   ArgLoginType
+//   // 3. AsyncThunkConfig. Какие есть поля смотрим в доке / исходном коде.
+//   // state - используем для типизации App. Когда используем getState
+//   // dispatch - типизация диспатча
+//   // rejectValue - используем для типизации возвращаемой ошибки
+//   // {//Теперь протепизировано отдельно ----
+//   //   state: RootState;
+//   //   dispatch: AppDispatch;
+//   //   rejectValue: unknown;
+//   // }
+// >("auth/login", async (arg) => {
+//   const res = await authApi.login(arg);
+//   return { profile: res.data };
+// });
+// const isLogged = createAppAsyncThunk<{ isLogged: boolean }, boolean>("app/isLogged", async (arg) => {
+//   const res = await authApi.me();
+//   return { isLogged: true };
+// });
+//
+// const authMe = createAppAsyncThunk<{ profile: ProfileType }>("auth/me", async () => {
+//   const res = await authApi.me();
+//   return { profile: res.data };
+// });
+// const logout = createAppAsyncThunk<{ profile: ProfileType }>("auth/logout", async () => {
+//   const res = await authApi.logout();
+//   return { profile: res.data };
+// });
+// const authUpdateUser = createAppAsyncThunk<{ profile: ProfileType }, UpdUser>("auth/update", async (arg) => {
+//   const res = await authApi.updUser(arg);
+//   return { profile: res.data.updatedUser };
+// });
+// const register = createAppAsyncThunk<{ profile: ProfileType }, ArgRegisterType>("auth/register", async (arg) => {
+//   const res = await authApi.register(arg);
+//   return { profile: res.data.addedUser };
+// });
+
+//Просто Reducer ------------------------------------------------------
 //THUNK -------------------------------------------------------------
 const register = createAsyncThunk(
   // 1 - prefix
@@ -24,41 +70,25 @@ const register = createAsyncThunk(
     });
   }
 );
-// const login = createAsyncThunk("auth/login", (arg: AuthApiType, thunkAPI) => {
-//   // const { dispatch } = thunkAPI;
-//   return authApi.login(arg).then((res) => {
-//     //return Из санки необходимо возвращать данные. Эти данные будут попадать в extraReducers
-//     // dispatch(authActions.setProfile({profile:res.data}));
-//     return { profile: res.data };
-//   });
-// });
-//async login ----------------------------------------------------------------------
-//extraReducer -
-// const login = createAppAsyncThunk<
-//   // 1. То, что возвращает Thunk
-//   { profile: AuthApiType },
-//   // 2. ThunkArg - аргументы санки (тип, который санка принимает)
-//   AuthApiType
-//   // 3. AsyncThunkConfig. Какие есть поля смотрим в доке / исходном коде.
-//   // state - используем для типизации App. Когда используем getState
-//   // dispatch - типизация диспатча
-//   // rejectValue - используем для типизации возвращаемой ошибки
-//   // {//Теперь протепизировано отдельно ----
-//   //   state: RootState;
-//   //   dispatch: AppDispatch;
-//   //   rejectValue: unknown;
-//   // }
-// >("auth/login", async (arg: AuthApiType) => {
-//   const res = await authApi.login(arg);
-//   // return { profile: res.data };
-// });
-//Просто Reducer ------------------------------------------------------
+
+const forgotNewPassword = createAppAsyncThunk("auth/forgotPassword", async (arg: ForgotType, thunkAPI) => {
+  const { dispatch } = thunkAPI;
+  const res = await authApi.authForgotPassword(arg);
+  // dispatch(authActions.cheekEmailUser({checkEmail:res.data.info}))
+});
+
+const setNewPassword = createAppAsyncThunk("auth/newPassword", async (arg: NewPasswordType, thunkAPI) => {
+  const { dispatch } = thunkAPI;
+  const res = await authApi.authNewPassword(arg);
+  dispatch(authActions.newPassword({ newPass: true }));
+});
+
 const login = createAppAsyncThunk("auth/login", async (arg: ArgLoginType, thunkAPI) => {
   const { dispatch } = thunkAPI;
   const res = await authApi.login(arg);
   dispatch(authThunks.authMe());
   dispatch(authActions.isLogged({ isLogged: true }));
-  dispatch(authActions.setProfile({ profile: res.data }));
+  // dispatch(authActions.setProfile({ profile: res.data }));
 });
 
 const authMe = createAppAsyncThunk("auth/me", async (arg, thunkAPI) => {
@@ -76,7 +106,7 @@ const logout = createAppAsyncThunk("auth/me", async (arg, thunkAPI) => {
   // return { profile: res.data };
 });
 
-const authUpdateUser = createAppAsyncThunk("auth/updateProfile", async (data: ProfileType, thunkAPI) => {
+const authUpdateUser = createAppAsyncThunk("auth/updateProfile", async (data: UpdUser, thunkAPI) => {
   const { dispatch } = thunkAPI;
   const res = await authApi.updUser(data);
   dispatch(authActions.updateUser({ profile: res.data.updatedUser }));
@@ -88,6 +118,7 @@ const slice = createSlice({
   initialState: {
     profile: null as ProfileType | null,
     isLogged: false, //Вход в систему
+    newPass: false,
   },
   reducers: {
     setProfile: (state, action: PayloadAction<{ profile: ProfileType }>) => {
@@ -102,15 +133,34 @@ const slice = createSlice({
     updateUser: (state, action: PayloadAction<{ profile: ProfileType }>) => {
       state.profile = action.payload.profile;
     },
+    newPassword: (state, action: PayloadAction<{ newPass: boolean }>) => {
+      state.newPass = action.payload.newPass;
+    },
   },
   // extraReducers: (builder) => {
-  //   builder.addCase(login.fulfilled, (state, action) => {
-  //     state.profile = action.payload.profile;
-  //   });
-  // },
+  //   builder
+  //     .addCase(login.fulfilled, (state, action) => {
+  //       state.profile = action.payload.profile;
+  //     })
+  //     .addCase(isLogged.fulfilled, (state, action) => {
+  //       state.isLogged = action.payload.isLogged
+  //     })
+  //     .addCase(register.fulfilled, (state, action) => {
+  //       state.profile = action.payload.profile;
+  //     })
+  //     .addCase(authMe.fulfilled, (state, action) => {
+  //       state.profile = action.payload.profile;
+  //     })
+  //     .addCase(logout.fulfilled, (state, action) => {
+  //       state.profile = action.payload.profile;
+  //     })
+  //     .addCase(authUpdateUser.fulfilled, (state, action) => {
+  //       state.profile = action.payload.profile;
+  //     });
+  // }
 });
 
 export const authReducer = slice.reducer;
 export const authActions = slice.actions; //заходим в наши actions
 // Санки давайте упакуем в объект, нам это пригодится в дальнейшем
-export const authThunks = { register, login, logout, authMe, authUpdateUser };
+export const authThunks = { register, login, logout, authMe, authUpdateUser, forgotNewPassword, setNewPassword };
