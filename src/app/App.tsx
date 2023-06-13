@@ -3,7 +3,7 @@ import "app/App.css";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ErrorPage } from "components/router/errorPage";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { appActions, appThunk } from "app/app.slice";
+import { appThunk } from "app/app.slice";
 import { Register } from "features/auth/register/Register";
 import { Login } from "features/auth/login/Login";
 import { ForgotPassword } from "features/auth/1-forgotPassword/ForgotPassword";
@@ -17,24 +17,18 @@ export function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
-      // dispatch(appThunk.isLoading(false))
-      dispatch(appActions.setIsLoading({ isLoading: false }));
-    }, 3000);
+    // dispatch(appThunk.isLoading(false))
     dispatch(appThunk.isInitializedApp());
   }, []);
 
-  // if (!initApp) {
-  //   return (
-  //     <div>
-  //       <h1 style={{ fontSize: "100px" }}>Loading</h1>
-  //     </div>
-  //   );
-  // }
+  console.log(initApp, "init app");
+  if (!initApp) {
+    return <div>{/*<h1 style={{ fontSize: "100px" }}>Loading</h1>*/}</div>;
+  }
 
   return (
     <div className="App">
-      {isLoading && <h1>Loader...</h1>}
+      {/*{isLoading && <h1>Loader...</h1>}*/}
       <Routes>
         <Route path={"/"} element={<Navigate to={"/profile"} />} />
         {/*AUTH --------------------------------------------------------*/}

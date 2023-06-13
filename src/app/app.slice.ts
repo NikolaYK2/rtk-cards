@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
-import { authApi } from "features/auth/auth.api";
-import { authActions, authThunks } from "features/auth/auth.slice";
+import { authThunks } from "features/auth/auth.slice";
 
 const isInitializedApp = createAppAsyncThunk("auth/me", async (arg, thunkAPI) => {
   const { dispatch } = thunkAPI;
-  const res = await authApi.me();
-  dispatch(authThunks.authMe());
-  dispatch(appActions.initializedApp({ isAppInitialized: true }));
-  dispatch(authActions.isLogged({ isLogged: true }));
+  try {
+    await dispatch(authThunks.authMe());
+    await dispatch(appActions.initializedApp({ isAppInitialized: true }));
+  } catch (e) {}
 });
 //хз ==========================================
 // const isInitializedApp = createAppAsyncThunk<{ isAppInitialized: boolean}, boolean>("app/init", async (arg) => {

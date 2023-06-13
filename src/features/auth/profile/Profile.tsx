@@ -41,6 +41,7 @@ export const Profile = () => {
     dispatch(authThunks.logout());
   };
 
+  console.log(isLogged);
   if (!isLogged) {
     return <Navigate to={"/sign-in"} />;
   }

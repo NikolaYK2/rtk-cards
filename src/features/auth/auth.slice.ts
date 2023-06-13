@@ -86,16 +86,20 @@ const setNewPassword = createAppAsyncThunk("auth/newPassword", async (arg: NewPa
 const login = createAppAsyncThunk("auth/login", async (arg: ArgLoginType, thunkAPI) => {
   const { dispatch } = thunkAPI;
   const res = await authApi.login(arg);
-  dispatch(authThunks.authMe());
-  dispatch(authActions.isLogged({ isLogged: true }));
+  await dispatch(authThunks.authMe());
+  await dispatch(authActions.isLogged({ isLogged: true }));
   // dispatch(authActions.setProfile({ profile: res.data }));
 });
 
 const authMe = createAppAsyncThunk("auth/me", async (arg, thunkAPI) => {
   const { dispatch } = thunkAPI;
-  const res = await authApi.me();
-  dispatch(authActions.isLogged({ isLogged: true }));
-  dispatch(authActions.setProfile({ profile: res.data }));
+  try {
+    const res = await authApi.me();
+    dispatch(authActions.isLogged({ isLogged: true }));
+    dispatch(authActions.setProfile({ profile: res.data }));
+  }catch (e) {
+    dispatch(authActions.isLogged({ isLogged: false }));
+  }
 });
 
 const logout = createAppAsyncThunk("auth/me", async (arg, thunkAPI) => {
@@ -103,6 +107,8 @@ const logout = createAppAsyncThunk("auth/me", async (arg, thunkAPI) => {
   const res = await authApi.logout();
   dispatch(authActions.clearProfile()); //Очищаем на профайл
   dispatch(authActions.isLogged({ isLogged: false }));
+  // dispatch(authActions.setProfile({ profile: res.data }));
+
   // return { profile: res.data };
 });
 
