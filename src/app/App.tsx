@@ -32,24 +32,26 @@ export function App() {
         <Header />
       </header>
       {/*{isLoading && <h1>Loader...</h1>}*/}
-      <main></main>
-      <Routes>
-        <Route path={"/"} element={<Navigate to={"/profile"} />} />
-        {/*AUTH --------------------------------------------------------*/}
-        <Route path={"/sign-up"} element={<Register />} />
-        <Route path={"/sign-in"} element={<Login />} />
-        <Route path={"/check-email"} element={<CheckEmail />} />
-        <Route path={"/forgot-password"} element={<ForgotPassword />} />
-        <Route path={"/set-new-password"} element={<CreatePassword />} />
-        <Route path={"/set-new-password/:token"} element={<CreatePassword />} />
-        <Route path={"/profile"} element={<Profile />} />
-        {/*--------------------------------------------------------*/}
+      <main>
+        <Routes>
+          <Route path={"/"} element={<Navigate to={"/profile"} />} />
+          {/*AUTH --------------------------------------------------------*/}
+          <Route path={"/sign-up"} element={<Register />} />
+          <Route path={"/sign-in"} element={<Login />} />
+          <Route path={"/check-email"} element={<CheckEmail />} />
+          <Route path={"/forgot-password"} element={<ForgotPassword />} />
+          <Route path={"/set-new-password"} element={<CreatePassword />} />
+          <Route path={"/set-new-password/:token"} element={<CreatePassword />} />
+          <Route path={"/profile"} element={<Profile />} />
+          {/*--------------------------------------------------------*/}
 
-        <Route path={"/packs"} />
-        <Route path={"/cards"} />
-        <Route path={"/learn"} />
-        <Route path={"*"} element={<ErrorPage />} />
-      </Routes>
+          <Route path={"/packs"} />
+          <Route path={"/cards"} />
+          <Route path={"/learn"} />
+          <Route path={"*"} element={<ErrorPage />} />
+        </Routes>
+
+      </main>
     </div>
   );
 }

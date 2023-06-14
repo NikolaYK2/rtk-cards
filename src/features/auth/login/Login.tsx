@@ -3,11 +3,14 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import sLog from "assets/SCSS/styleContinerAuth.module.scss";
 import { Navigate, NavLink } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ArgLoginType} from "features/auth/auth.api";
+import { ArgLoginType } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
 import { field, validEmail } from "common/utils/validate";
+import { useShowPasswordInput } from "common/utils/showPassword";
+import { SVGIcons } from "assets/img/iconSVG/SVGIcons";
 
 export const Login = () => {
+  const { type, toggle } = useShowPasswordInput();
   const isLogged = useAppSelector((state) => state.auth.isLogged);
   const dispatch = useAppDispatch();
 
@@ -22,7 +25,7 @@ export const Login = () => {
     handleSubmit,
     reset,
     watch,
-    formState: { errors, isValid,},
+    formState: { errors, isValid },
   } = useForm<ArgLoginType>({
     mode: "onBlur",
     defaultValues: {
@@ -60,7 +63,7 @@ export const Login = () => {
         </div>
         <div className={sLog.blockInput}>
           <input
-            type="password"
+            type={type}
             autoComplete={"on"}
             {...register("password", {
               minLength: { value: 7, message: "min length is 7" },
@@ -69,6 +72,9 @@ export const Login = () => {
           />
           <label className={watch().password ? sLog.modLabel : ""}>Password</label>
           <p>{errors.password?.message}</p>
+          <div className={sLog.showInput} onClick={toggle}>
+            <SVGIcons id={type === "text" ? "inputShowOff" : "inputShowOn"} />
+          </div>
         </div>
         <div className={sLog.blockCheckbox}>
           <input type="checkbox" {...register("rememberMe")} />
@@ -77,7 +83,7 @@ export const Login = () => {
         <NavLink to={"/forgot-password"}>
           <span>Forgot Password?</span>
         </NavLink>
-        <button type={'submit'}>send</button>
+        <button type={"submit"}>send</button>
       </form>
       <span>Don't have an account?</span>
       <NavLink to={"/sign-up"}>

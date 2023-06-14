@@ -66,6 +66,18 @@
     .error{
       border-bottom: 2px solid red;
     }
+    .showInput{
+      position: absolute;
+      top: 30%;
+      right: 0;
+
+      width: 24px;
+      height: 24px;
+
+      background: transparent;
+
+      cursor: pointer;
+    }
   }
 }
 

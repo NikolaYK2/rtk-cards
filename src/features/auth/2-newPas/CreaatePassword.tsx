@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React from "react";
 import sLog from "assets/SCSS/styleContinerAuth.module.scss";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NewPasswordType } from "features/auth/auth.api";
@@ -6,9 +6,11 @@ import { authThunks } from "features/auth/auth.slice";
 import { field } from "common/utils/validate";
 import { Navigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
+import { SVGIcons } from "assets/img/iconSVG/SVGIcons";
+import { useShowPasswordInput } from "common/utils/showPassword";
 
 export const CreatePassword = () => {
-  const [val, setVal] = useState("");
+  const { type, toggle } = useShowPasswordInput();
   const dispatch = useAppDispatch();
   const newPass = useAppSelector((state) => state.auth.newPass);
   const { token } = useParams();
@@ -32,10 +34,6 @@ export const CreatePassword = () => {
     reset();
   };
 
-  const change = (e: ChangeEvent<HTMLInputElement>) => {
-    setVal(e.currentTarget.value);
-  };
-
   if (newPass) {
     return <Navigate to={"/sign-in"} />;
   }
@@ -46,15 +44,18 @@ export const CreatePassword = () => {
       <form className={sLog.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={sLog.blockInput}>
           <input
-            type="password"
+            type={type}
             {...register("password", {
               minLength: { value: 7, message: "min length is 7" },
               required: field,
             })}
             autoComplete={"off"}
           />
-          <label className={val ? sLog.modLabel : ""}>Password</label>
-          <p></p>
+          <label className={watch().password ? sLog.modLabel : ""}>Password</label>
+          <p>{errors.password?.message}</p>
+          <div className={sLog.showInput} onClick={toggle}>
+            <SVGIcons id={type === "text" ? "inputShowOff" : "inputShowOn"} />
+          </div>
         </div>
         <span>Create new password and we will send you further instructions to email</span>
         <button>Create new password</button>

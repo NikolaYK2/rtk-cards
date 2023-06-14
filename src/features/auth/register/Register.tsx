@@ -1,27 +1,31 @@
-import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "app/hooks";
+import React from "react";
+import { useAppDispatch } from "app/hooks";
 import sAuth from "assets/SCSS/styleContinerAuth.module.scss";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ArgRegisterType } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
 import { field, validEmail } from "common/utils/validate";
+import { SVGIcons } from "assets/img/iconSVG/SVGIcons";
+import { useShowPasswordInput } from "common/utils/showPassword";
 
 type RepeatRasType = ArgRegisterType & {
   repeatPassword: string;
 };
 export const Register = () => {
-  const [val, setVal] = useState("");
-  const isLogged = useAppSelector((state) => state.auth.isLogged);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const { type, toggle } = useShowPasswordInput();
 
+  const dispatch = useAppDispatch();
+
+  //Просмотр пароля -------------------
+
+  //form -----------------------------
   const {
     register,
     handleSubmit,
     reset,
     watch,
-    formState: { errors, isValid, },
+    formState: { errors, isValid },
   } = useForm<RepeatRasType>({
     mode: "onBlur",
     defaultValues: {
@@ -35,14 +39,6 @@ export const Register = () => {
     dispatch(authThunks.register(data));
     reset();
   };
-  // const registerHandler = () => {
-  //   dispatch(authThunks.register({ email: "illidan@mail.ru", password: "12335illidan35" }));
-  // };
-
-
-  // if (isLogged) {
-  //   return <Navigate to={'/profile'}/>
-  // }
 
   return (
     <div className={sAuth.container}>
@@ -66,7 +62,7 @@ export const Register = () => {
         <div className={sAuth.blockInput}>
           <input
             className={errors.password ? sAuth.error : ""}
-            type="password"
+            type={type}
             {...register("password", {
               minLength: { value: 7, message: "min length is 7" },
               required: field,
@@ -74,11 +70,14 @@ export const Register = () => {
           />
           <label className={watch().password ? sAuth.modLabel : ""}>Password</label>
           <p>{errors.password?.message}</p>
+          <div className={sAuth.showInput} onClick={toggle}>
+            <SVGIcons id={type === 'text' ? "inputShowOff" : "inputShowOn"} />
+          </div>
         </div>
         <div className={sAuth.blockInput}>
           <input
             className={errors.repeatPassword ? sAuth.error : ""}
-            type="password"
+            type={type}
             autoComplete={"off"}
             {...register("repeatPassword", {
               required: field,
@@ -87,6 +86,9 @@ export const Register = () => {
           />
           <label className={watch().repeatPassword ? sAuth.modLabel : ""}>Confirm password</label>
           <p>{errors.repeatPassword?.message}</p>
+          <div className={sAuth.showInput} onClick={toggle}>
+            <SVGIcons id={type === 'text' ? "inputShowOff" : "inputShowOn"} />
+          </div>
         </div>
         <button disabled={!isValid} className={!isValid ? sAuth.disabl : ""}>
           register
