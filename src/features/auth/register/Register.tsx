@@ -25,7 +25,7 @@ export const Register = () => {
     handleSubmit,
     reset,
     watch,
-    formState: { errors, isValid },
+    formState: { errors, isSubmitting },
   } = useForm<RepeatRasType>({
     mode: "onBlur",
     defaultValues: {
@@ -63,6 +63,7 @@ export const Register = () => {
           <input
             className={errors.password ? sAuth.error : ""}
             type={type}
+            autoComplete={"off"}
             {...register("password", {
               minLength: { value: 7, message: "min length is 7" },
               required: field,
@@ -90,7 +91,7 @@ export const Register = () => {
             <SVGIcons id={type === 'text' ? "inputShowOff" : "inputShowOn"} />
           </div>
         </div>
-        <button disabled={!isValid} className={!isValid ? sAuth.disabl : ""}>
+        <button disabled={isSubmitting} className={isSubmitting ? sAuth.disabl : ""}>
           register
         </button>
       </form>

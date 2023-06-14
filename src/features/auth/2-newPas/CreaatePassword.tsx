@@ -8,6 +8,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { SVGIcons } from "assets/img/iconSVG/SVGIcons";
 import { useShowPasswordInput } from "common/utils/showPassword";
+import sAuth from "assets/SCSS/styleContinerAuth.module.scss";
 
 export const CreatePassword = () => {
   const { type, toggle } = useShowPasswordInput();
@@ -20,7 +21,7 @@ export const CreatePassword = () => {
     register,
     watch,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     mode: "onBlur",
     defaultValues: {
@@ -45,6 +46,7 @@ export const CreatePassword = () => {
         <div className={sLog.blockInput}>
           <input
             type={type}
+            className={errors.password ? sAuth.error : ""}
             {...register("password", {
               minLength: { value: 7, message: "min length is 7" },
               required: field,
@@ -58,7 +60,7 @@ export const CreatePassword = () => {
           </div>
         </div>
         <span>Create new password and we will send you further instructions to email</span>
-        <button>Create new password</button>
+        <button disabled={isSubmitting}>Create new password</button>
       </form>
     </div>
   );

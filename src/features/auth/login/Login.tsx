@@ -8,6 +8,7 @@ import { authThunks } from "features/auth/auth.slice";
 import { field, validEmail } from "common/utils/validate";
 import { useShowPasswordInput } from "common/utils/showPassword";
 import { SVGIcons } from "assets/img/iconSVG/SVGIcons";
+import sAuth from "assets/SCSS/styleContinerAuth.module.scss";
 
 export const Login = () => {
   const { type, toggle } = useShowPasswordInput();
@@ -25,7 +26,7 @@ export const Login = () => {
     handleSubmit,
     reset,
     watch,
-    formState: { errors, isValid },
+    formState: { errors, isSubmitting },
   } = useForm<ArgLoginType>({
     mode: "onBlur",
     defaultValues: {
@@ -50,6 +51,7 @@ export const Login = () => {
         <div className={sLog.blockInput}>
           <input
             type="email"
+            className={errors.email ? sAuth.error : ""}
             {...register("email", {
               required: field,
               pattern: {
@@ -64,7 +66,8 @@ export const Login = () => {
         <div className={sLog.blockInput}>
           <input
             type={type}
-            autoComplete={"on"}
+            className={errors.password ? sAuth.error : ""}
+            autoComplete={"off"}
             {...register("password", {
               minLength: { value: 7, message: "min length is 7" },
               required: field,
@@ -83,7 +86,7 @@ export const Login = () => {
         <NavLink to={"/forgot-password"}>
           <span>Forgot Password?</span>
         </NavLink>
-        <button type={"submit"}>send</button>
+        <button type={"submit"} disabled={isSubmitting}>send</button>
       </form>
       <span>Don't have an account?</span>
       <NavLink to={"/sign-up"}>

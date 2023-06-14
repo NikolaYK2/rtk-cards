@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ForgotType } from "features/auth/auth.api";
 import { useAppDispatch } from "app/hooks";
 import { authThunks } from "features/auth/auth.slice";
+import sAuth from "assets/SCSS/styleContinerAuth.module.scss";
 
 export const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ link</a>
     register,
     watch,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     mode: "onBlur",
     defaultValues: {
@@ -31,11 +32,11 @@ link</a>
       message: message,
     },
   });
-  const onSubmit: SubmitHandler<ForgotType> = (data) => {
+  const onSubmit: SubmitHandler<ForgotType> = async (data) => {
     console.log(data);
-    dispatch(authThunks.forgotNewPassword(data));
+    await dispatch(authThunks.forgotNewPassword(data));
     reset();
-    navigate("/check-email");
+    await navigate("/check-email");
   };
 
   return (
@@ -45,6 +46,7 @@ link</a>
         <div className={sLog.blockInput}>
           <input
             type="email"
+            className={errors.email ? sAuth.error : ""}
             {...register("email", {
               required: field,
             })}
@@ -53,7 +55,7 @@ link</a>
           <p>{errors.email?.message}</p>
         </div>
         <span>Enter your email address and we will send you further instructions </span>
-        <button>Send Instructions</button>
+        <button disabled={isSubmitting}>Send Instructions</button>
       </form>
       <span>Did you remember your password?</span>
       <NavLink to={"/sign-in"}>
