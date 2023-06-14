@@ -6,7 +6,7 @@ import {
   ForgotType,
   NewPasswordType,
   ProfileType,
-  UpdUser
+  UpdUser,
 } from "features/auth/auth.api";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 
@@ -74,7 +74,7 @@ const register = createAsyncThunk(
 const forgotNewPassword = createAppAsyncThunk("auth/forgotPassword", async (arg: ForgotType, thunkAPI) => {
   const { dispatch } = thunkAPI;
   const res = await authApi.authForgotPassword(arg);
-  // dispatch(authActions.cheekEmailUser({checkEmail:res.data.info}))
+  dispatch(authActions.checkEmail({ email: arg.email }));
 });
 
 const setNewPassword = createAppAsyncThunk("auth/newPassword", async (arg: NewPasswordType, thunkAPI) => {
@@ -97,7 +97,7 @@ const authMe = createAppAsyncThunk("auth/me", async (arg, thunkAPI) => {
     const res = await authApi.me();
     dispatch(authActions.isLogged({ isLogged: true }));
     dispatch(authActions.setProfile({ profile: res.data }));
-  }catch (e) {
+  } catch (e) {
     dispatch(authActions.isLogged({ isLogged: false }));
   }
 });
@@ -125,6 +125,7 @@ const slice = createSlice({
     profile: null as ProfileType | null,
     isLogged: false, //Вход в систему
     newPass: false,
+    email: "",
   },
   reducers: {
     setProfile: (state, action: PayloadAction<{ profile: ProfileType }>) => {
@@ -141,6 +142,9 @@ const slice = createSlice({
     },
     newPassword: (state, action: PayloadAction<{ newPass: boolean }>) => {
       state.newPass = action.payload.newPass;
+    },
+    checkEmail: (state, action: PayloadAction<{ email: string }>) => {
+      state.email = action.payload.email;
     },
   },
   // extraReducers: (builder) => {

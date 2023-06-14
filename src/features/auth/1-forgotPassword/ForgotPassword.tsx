@@ -1,15 +1,13 @@
-import React, { ChangeEvent, useState } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import sLog from "assets/SCSS/styleContinerAuth.module.scss";
 import { field } from "common/utils/validate";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ForgotType } from "features/auth/auth.api";
-import { useAppDispatch, useAppSelector } from "app/hooks";
+import { useAppDispatch } from "app/hooks";
 import { authThunks } from "features/auth/auth.slice";
 
 export const ForgotPassword = () => {
-  const [val, setVal] = useState("");
-  const email = useAppSelector(state => state.auth)
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -37,10 +35,7 @@ link</a>
     console.log(data);
     dispatch(authThunks.forgotNewPassword(data));
     reset();
-    navigate('/set-new-password')
-  };
-  const change = (e: ChangeEvent<HTMLInputElement>) => {
-    setVal(e.currentTarget.value);
+    navigate("/check-email");
   };
 
   return (
@@ -54,14 +49,11 @@ link</a>
               required: field,
             })}
           />
-          {/*<input type="email" value={val} onChange={change} />*/}
           <label className={watch().email ? sLog.modLabel : ""}>Email</label>
           <p>{errors.email?.message}</p>
         </div>
         <span>Enter your email address and we will send you further instructions </span>
-        {/*<NavLink to={'/check-email'}>*/}
         <button>Send Instructions</button>
-        {/*</NavLink>*/}
       </form>
       <span>Did you remember your password?</span>
       <NavLink to={"/sign-in"}>

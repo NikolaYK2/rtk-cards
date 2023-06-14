@@ -10,9 +10,9 @@ import { ForgotPassword } from "features/auth/1-forgotPassword/ForgotPassword";
 import { CreatePassword } from "features/auth/2-newPas/CreaatePassword";
 import { CheckEmail } from "features/auth/checkEmail/ChekEmail";
 import { Profile } from "features/auth/profile/Profile";
+import { Header } from "features/1-header/Header";
 
 export function App() {
-  const isLoading = useAppSelector((state) => state.app.isLoading);
   const initApp = useAppSelector((state) => state.app.isAppInitialized);
   const dispatch = useAppDispatch();
 
@@ -28,7 +28,11 @@ export function App() {
 
   return (
     <div className="App">
+      <header>
+        <Header />
+      </header>
       {/*{isLoading && <h1>Loader...</h1>}*/}
+      <main></main>
       <Routes>
         <Route path={"/"} element={<Navigate to={"/profile"} />} />
         {/*AUTH --------------------------------------------------------*/}
