@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import { authThunks } from "features/auth/auth.slice";
 import { field } from "common/utils/validate";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { SVGIcons } from "assets/img/iconSVG/SVGIcons";
 
 export const Profile = () => {
   const isLogged = useAppSelector((state) => state.auth.isLogged);
@@ -49,12 +50,15 @@ export const Profile = () => {
   return (
     <div className={sAuth.container}>
       <h1>Personal Information</h1>
-      <div>
+      <div className={sAuth.avatar}>
         <img src={avatar} alt="" />
+        <div>
+          <SVGIcons id={"avatar"} />
+        </div>
       </div>
 
       {changeName ? (
-        <h2 onDoubleClick={changeNameHandle} className={sAuth.name}>
+        <h2 className={sAuth.name} onDoubleClick={changeNameHandle}>
           {nameRes}
         </h2>
       ) : (
