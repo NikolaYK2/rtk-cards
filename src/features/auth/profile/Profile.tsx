@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import sAuth from "assets/SCSS/styleContinerAuth.module.scss";
-import avatar from "assets/img/prof/img.png";
+import avatar from "assets/img/prof/avatar.jpg";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Navigate } from "react-router-dom";
 import { authThunks } from "features/auth/auth.slice";
@@ -28,6 +28,8 @@ export const Profile = () => {
       name: nameRes,
     },
   });
+
+  // const {onBlur}= register('name');
 
   const onSubmit: SubmitHandler<{ name: string }> = (data) => {
     dispatch(authThunks.authUpdateUser({ name: data.name }));
@@ -71,6 +73,7 @@ export const Profile = () => {
                 required: field,
                 minLength: { value: 3, message: "min length is 3" },
               })}
+              onBlur={handleSubmit(onSubmit)}
             />
             <label className={watch().name ? sAuth.modLabel : ""}>Nickname</label>
             <p>{errors.name?.message}</p>
