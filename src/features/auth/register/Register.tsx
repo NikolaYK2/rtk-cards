@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import sAuth from "assets/SCSS/styleContinerAuth.module.scss";
-import { Navigate, NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ArgRegisterType } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
@@ -15,6 +15,7 @@ type RepeatRasType = ArgRegisterType & {
 export const Register = () => {
   const isLogged = useAppSelector(state => state.auth.isLogged)
   const { type, toggle } = useShowPasswordInput();
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -39,10 +40,11 @@ export const Register = () => {
   const onSubmit: SubmitHandler<ArgRegisterType> = (data) => {
     dispatch(authThunks.register(data));
     reset();
+    navigate("/sign-in")
   };
-  if (isLogged) {
-    return <Navigate to={"/"} />;
-  }
+  // if (isLogged) {
+  //   return <Navigate to={"/sign-in"} />;
+  // }
 
   return (
     <div className={sAuth.container}>
