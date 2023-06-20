@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import sLog from "assets/SCSS/styleContinerAuth.module.scss";
-import { Navigate, NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ArgLoginType } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
@@ -14,6 +14,7 @@ export const Login = () => {
   const { type, toggle } = useShowPasswordInput();
   const isLogged = useAppSelector((state) => state.auth.isLogged);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   // const change = (e: ChangeEvent<HTMLInputElement>) => {
   //   setVal(e.currentTarget.value);
@@ -39,10 +40,11 @@ export const Login = () => {
   const onSubmit: SubmitHandler<ArgLoginType> = (data) => {
     dispatch(authThunks.login(data));
     reset();
+    // navigate('/profile')
   };
 
   if (isLogged) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={"/profile"} />;
   }
   return (
     <div className={sLog.container}>

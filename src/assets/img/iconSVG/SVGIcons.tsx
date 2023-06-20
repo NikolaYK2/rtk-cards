@@ -8,7 +8,7 @@ export const SVGIcons = (props: { id: string }) => {
           <path
             d="M107.5 54C107.5 83.5472 83.5472 107.5 54 107.5C24.4528 107.5 0.5 83.5472 0.5 54C0.5 24.4528 24.4528 0.5 54 0.5C83.5472 0.5 107.5 24.4528 107.5 54Z"
             fill="#366EFF"
-            fill-opacity="0.05"
+            fillOpacity="0.05"
             stroke="#366EFF"
           />
           <path
