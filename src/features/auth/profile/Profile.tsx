@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import sAuth from "assets/SCSS/styleContinerAuth.module.scss";
 import avatar from "assets/img/prof/avatar.jpg";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { Navigate } from "react-router-dom";
 import { authThunks } from "features/auth/auth.slice";
 import { field } from "common/utils/validate";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -45,9 +44,9 @@ export const Profile = () => {
   };
 
   console.log(isLogged);
-  if (!isLogged) {
-    return <Navigate to={"/sign-in"} />;
-  }
+  // if (!isLogged) {
+  //   return <Navigate to={"/sign-in"} />;
+  // }
 
   return (
     <div className={sAuth.container}>
@@ -55,15 +54,19 @@ export const Profile = () => {
       <div className={sAuth.avatar}>
         <img src={avatar} alt="" />
         <div>
-          <SVGIcons id={"avatar"} />
+          <SVGIcons id={"change"} />
         </div>
       </div>
 
       {changeName ? (
         <h2 className={sAuth.name} onDoubleClick={changeNameHandle}>
           {nameRes}
+          <div>
+            <SVGIcons id={"change"} />
+          </div>
         </h2>
       ) : (
+        //CHANGE NAME INPUT ---------------------------------------------------------
         <form className={sAuth.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={sAuth.blockInput}>
             <input
@@ -83,7 +86,12 @@ export const Profile = () => {
       )}
 
       <span className={sAuth.email}>{emailRes}</span>
-      <button onClick={logoutHandle}>Log out</button>
+      <button onClick={logoutHandle}>
+        <div>
+          <SVGIcons id={"changeB"} />
+        </div>
+        Log out
+      </button>
     </div>
   );
 };

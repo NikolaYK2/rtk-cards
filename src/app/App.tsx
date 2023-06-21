@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "app/App.css";
-import { Outlet, useNavigate, useNavigation } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { appThunk } from "app/app.slice";
 import { Header } from "features/1-header/Header";
@@ -9,7 +9,6 @@ export function App() {
   const initApp = useAppSelector((state) => state.app.isAppInitialized);
   const isLogged = useAppSelector((state) => state.auth.isLogged);
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,8 +16,9 @@ export function App() {
 
     if (isLogged) {
       navigate("profile");
+    } else {
+      navigate("sign-in");
     }
-
   }, [navigate, isLogged, dispatch]);
 
   console.log(initApp, "init app");

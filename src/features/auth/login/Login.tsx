@@ -1,7 +1,6 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "app/hooks";
-import sLog from "assets/SCSS/styleContinerAuth.module.scss";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "app/hooks";
+import { NavLink } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ArgLoginType } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
@@ -12,9 +11,7 @@ import sAuth from "assets/SCSS/styleContinerAuth.module.scss";
 
 export const Login = () => {
   const { type, toggle } = useShowPasswordInput();
-  const isLogged = useAppSelector((state) => state.auth.isLogged);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   // const change = (e: ChangeEvent<HTMLInputElement>) => {
   //   setVal(e.currentTarget.value);
@@ -43,14 +40,14 @@ export const Login = () => {
     // navigate('/profile')
   };
 
-  if (isLogged) {
-    return <Navigate to={"/profile"} />;
-  }
+  // if (isLogged) {
+  //   return <Navigate to={"/profile"} />;
+  // }
   return (
-    <div className={sLog.container}>
+    <div className={sAuth.container}>
       <h1>Login</h1>
-      <form className={sLog.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={sLog.blockInput}>
+      <form className={sAuth.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={sAuth.blockInput}>
           <input
             type="email"
             className={errors.email ? sAuth.error : ""}
@@ -62,10 +59,10 @@ export const Login = () => {
               },
             })}
           />
-          <label className={watch().email ? sLog.modLabel : ""}>Email</label>
+          <label className={watch().email ? sAuth.modLabel : ""}>Email</label>
           <p>{errors.email?.message}</p>
         </div>
-        <div className={sLog.blockInput}>
+        <div className={sAuth.blockInput}>
           <input
             type={type}
             className={errors.password ? sAuth.error : ""}
@@ -75,20 +72,23 @@ export const Login = () => {
               required: field,
             })}
           />
-          <label className={watch().password ? sLog.modLabel : ""}>Password</label>
+          <label className={watch().password ? sAuth.modLabel : ""}>Password</label>
           <p>{errors.password?.message}</p>
-          <div className={sLog.showInput} onClick={toggle}>
+          <div className={sAuth.showInput} onClick={toggle}>
             <SVGIcons id={type === "text" ? "inputShowOff" : "inputShowOn"} />
           </div>
         </div>
-        <div className={sLog.blockCheckbox}>
+        <label className={sAuth.blockCheckbox}>
           <input type="checkbox" {...register("rememberMe")} />
           Remember me
-        </div>
+          <span className={sAuth.checkmark}></span>
+        </label>
         <NavLink to={"/forgot-password"}>
           <span>Forgot Password?</span>
         </NavLink>
-        <button type={"submit"} disabled={isSubmitting}>send</button>
+        <button type={"submit"} disabled={isSubmitting}>
+          send
+        </button>
       </form>
       <span>Don't have an account?</span>
       <NavLink to={"/sign-up"}>

@@ -1,14 +1,17 @@
 @import "./styleFont";
 @import "./styleButton";
 @import "./styleInput";
+@import "variables";
 @import "mixins";
 
 .container {
   max-width: 413px;
-  padding: 35px 33px 42px;
+  padding: 33px 33px 29px;
   margin: 60px auto 0;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
+  background: $bcColorHeadCont;
+  border: $borderCont;
+  border-radius: $borderRadiusCont;
 
   > h1 {
     @extend %Hfont;
@@ -26,16 +29,18 @@
     }
 
     > div {
-      @include position(flex, absolute, '', '', 0, 0, 32px, 32px);
-      justify-content: center;
-      align-items: center;
-      background: #808080;
+      @include position(block, absolute, '', '', 0, 0, 32px, 32px);
 
-      border: 1px solid #FFF;
-      border-radius: 50%;
+      background: $changeIconBC;
+      box-shadow: $changeIconBSH;
+      border-radius: $changeIconR;
 
       > svg {
-        padding: 6px;
+        padding: 4px;
+
+        > path {
+          fill: $changeIcon;
+        }
       }
     }
   }
@@ -45,18 +50,20 @@
     justify-content: center;
     align-items: center;
 
-    font-weight: 500;
+    font-weight: 700;
     font-size: 20px;
-    line-height: 24px;
     color: $FontColor;
 
-    &:after {
-      content: '';
-      text-align: right;
-      margin: 0 0 0 8px;
+    > div {
       width: 16px;
       height: 16px;
-      background: url("../img/prof/changeName.png") 0 0 /cover no-repeat;
+      margin: 0 0 0 9px;
+
+      > svg {
+        > path {
+          fill: $changeIcon;
+        }
+      }
     }
   }
 
@@ -86,33 +93,50 @@
   }
 
   > button {
-    position: relative;
-    padding: 8px 43px;
-    background: #FCFCFC;
-    box-shadow: 0 2px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
 
-    &:before {
-      position: absolute;
-      top: 25%;
-      left: 20px;
-      content: '';
+    margin: 0 auto;
+    padding: 6px 26px;
+
+    background: $changeIconBC;
+    box-shadow: $changeIconBSH;
+    border-radius: $borderBut;
+    color: $FontColor;
+
+    > div {
       width: 16px;
       height: 16px;
-      background: url("../img/prof/logOut.png") 0 0/cover no-repeat;
+      margin: 0 10px 0 0;
+
+      > svg {
+        > path {
+          stroke: $changeIcon;
+        }
+      }
     }
   }
 
   //Для компоненты check email ---------------
   > div {
-    width: 108px;
-    height: 108px;
+    width: 90px;
+    height: 90px;
     margin: 29px auto;
+    //фон ------------------------
+    > svg {
+      > path {
+        fill: rgba(140, 97, 255, 1);
+        stroke: $bcgColorBut;
 
-    > img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+        //фон картинки ------
+        @each $index in 9, 11, 13, 24, 25, 26, 28, 30, 33 {
+          &:nth-child(#{$index}) {
+            fill: $bcColorHeadCont;
+            stroke: $bcColorHeadCont;
+          }
+        }
+      }
     }
   }
 
@@ -139,14 +163,44 @@
     @extend %input;
 
     .blockCheckbox {
-      display: flex;
+      @include position(flex, relative, 0, 0, '', '', '', '');
+      justify-content: end;
       align-items: center;
+
+      width: 140px;
+      height: 18px;
+
       margin: 16px 0 0;
 
+      color: $FontColor;
+
+      cursor: pointer;
+
       > input {
-        height: 18px;
-        width: 18px;
-        margin: 0 12px 0 0;
+        display: none;
+
+        &:checked + .checkmark {
+          background: #fff;
+          //border-color: #FFFFFF;
+        }
+
+        &:checked + .checkmark:after {
+          display: block;
+        }
+      }
+
+      .checkmark {
+        @include position(block, absolute, 0, 0, '', '', 18px, 18px);
+        background: #FFFFFF;
+        margin: 0;
+
+        &:after {
+          content: '';
+          @include position(none, absolute, 0, 30%, '', '', 7px, 15px);
+          border: solid black;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+        }
       }
     }
 
@@ -172,15 +226,15 @@
 
   span {
     display: block;
-    line-height: 24px;
+    //line-height: 24px;
+    color: $fontLabelP;
 
     &:last-child {
       font-weight: 600;
       font-size: 16px;
       text-decoration-line: underline;
       color: #366EFF;
-      line-height: 24px;
-      margin: 11px 0 0;
+      margin: 30px 0 0;
     }
   }
 

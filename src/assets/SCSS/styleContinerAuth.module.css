@@ -1,0 +1,346 @@
+.container > h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  height: 32px;
+  color: #fff;
+}
+
+.container .form > button, .container a > button {
+  width: 100%;
+  padding: 8px 0;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.01em;
+  color: #FFF;
+  background: #8C61FF;
+  box-shadow: 0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  margin: 60px 0 31px;
+}
+
+.container > h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  height: 32px;
+  color: #fff;
+}
+
+.container .blockInput {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  flex-direction: column;
+  width: 100%;
+  justify-content: end;
+}
+.container .blockInput:nth-child(1) {
+  margin: 41px 0 34px;
+}
+.container .blockInput:nth-child(2) {
+  margin: 0 0 34px;
+}
+.container .blockInput input {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: "";
+  right: "";
+  width: "";
+  height: "";
+  display: block;
+  background: transparent;
+  width: 100%;
+  padding: 6px 12px 6px;
+  border: 1px solid #313131;
+  border-radius: 2px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;
+  z-index: 2;
+}
+.container .blockInput input:-webkit-autofill {
+  transition: all 5000s ease-in-out 0s;
+}
+.container .blockInput input:focus + label {
+  transform: translate(0, -30px) scale(0.8);
+  transform-origin: -50px top;
+  transition: all 0.3s ease-in-out;
+}
+.container .blockInput label {
+  position: absolute;
+  z-index: 1;
+  top: 20%;
+  left: 12px;
+  font-size: 16px;
+  text-align: start;
+  white-space: nowrap;
+  color: #808080;
+  transition: all 0.3s ease-in-out;
+}
+.container .blockInput .modLabel {
+  transform: translate(0, -30px) scale(0.8);
+  transform-origin: -50px top;
+  transition: all 0.3s ease-in-out;
+}
+.container .blockInput > p {
+  margin: 3px 0 0;
+  color: red;
+  height: 14px;
+  text-align: start;
+}
+.container .blockInput .error {
+  border-bottom: 1px solid red;
+}
+.container .blockInput .showInput {
+  position: absolute;
+  top: 15%;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.container {
+  max-width: 413px;
+  padding: 33px 33px 29px;
+  margin: 60px auto 0;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
+  background: #171717;
+  border: 1px solid #313131;
+  border-radius: 2px;
+}
+.container .avatar {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: "";
+  right: "";
+  width: 96px;
+  height: 96px;
+}
+.container .avatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.container .avatar > div {
+  display: block;
+  position: absolute;
+  top: "";
+  left: "";
+  bottom: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  background: #4C4C4C;
+  box-shadow: 0px 2px 10px rgba(109, 109, 109, 0.25);
+  border-radius: 4px;
+}
+.container .avatar > div > svg {
+  padding: 4px;
+}
+.container .avatar > div > svg > path {
+  fill: #fff;
+}
+.container .name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+}
+.container .name > div {
+  width: 16px;
+  height: 16px;
+  margin: 0 0 0 9px;
+}
+.container .name > div > svg > path {
+  fill: #fff;
+}
+.container .email {
+  margin: 14px 0 29px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  opacity: 0.5;
+}
+.container .save {
+  position: absolute;
+  bottom: 32%;
+  right: 12px;
+  background: #366EFF;
+  border-radius: 2px;
+  padding: 0 10px;
+  height: 24px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 24px;
+  color: #FFF;
+}
+.container > button {
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+  margin: 0 auto;
+  padding: 6px 26px;
+  background: #4C4C4C;
+  box-shadow: 0px 2px 10px rgba(109, 109, 109, 0.25);
+  border-radius: 4px;
+  color: #fff;
+}
+.container > button > div {
+  width: 16px;
+  height: 16px;
+  margin: 0 10px 0 0;
+}
+.container > button > div > svg > path {
+  stroke: #fff;
+}
+.container > div {
+  width: 90px;
+  height: 90px;
+  margin: 29px auto;
+}
+.container > div > svg > path {
+  fill: rgb(140, 97, 255);
+  stroke: #8C61FF;
+}
+.container > div > svg > path:nth-child(9) {
+  fill: #171717;
+  stroke: #171717;
+}
+.container > div > svg > path:nth-child(11) {
+  fill: #171717;
+  stroke: #171717;
+}
+.container > div > svg > path:nth-child(13) {
+  fill: #171717;
+  stroke: #171717;
+}
+.container > div > svg > path:nth-child(24) {
+  fill: #171717;
+  stroke: #171717;
+}
+.container > div > svg > path:nth-child(25) {
+  fill: #171717;
+  stroke: #171717;
+}
+.container > div > svg > path:nth-child(26) {
+  fill: #171717;
+  stroke: #171717;
+}
+.container > div > svg > path:nth-child(28) {
+  fill: #171717;
+  stroke: #171717;
+}
+.container > div > svg > path:nth-child(30) {
+  fill: #171717;
+  stroke: #171717;
+}
+.container > div > svg > path:nth-child(33) {
+  fill: #171717;
+  stroke: #171717;
+}
+.container > span {
+  opacity: 0.5;
+  margin: 31px 0 -10px;
+}
+.container a > button {
+  margin-bottom: 0;
+}
+.container .form > span {
+  text-align: start;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  opacity: 0.5;
+}
+.container .form .blockCheckbox {
+  display: flex;
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: "";
+  right: "";
+  width: "";
+  height: "";
+  justify-content: end;
+  align-items: center;
+  width: 140px;
+  height: 18px;
+  margin: 16px 0 0;
+  color: #fff;
+  cursor: pointer;
+}
+.container .form .blockCheckbox > input {
+  display: none;
+}
+.container .form .blockCheckbox > input:checked + .checkmark {
+  background: #fff;
+}
+.container .form .blockCheckbox > input:checked + .checkmark:after {
+  display: block;
+}
+.container .form .blockCheckbox .checkmark {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: "";
+  right: "";
+  width: 18px;
+  height: 18px;
+  background: #FFFFFF;
+  margin: 0;
+}
+.container .form .blockCheckbox .checkmark:after {
+  content: "";
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 30%;
+  bottom: "";
+  right: "";
+  width: 7px;
+  height: 15px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.container .form > a > span {
+  display: block;
+  margin: 28px 0 9px;
+  list-style-type: none;
+  text-decoration: none;
+  text-align: right;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #fff;
+}
+.container span {
+  display: block;
+  color: #808080;
+}
+.container span:last-child {
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration-line: underline;
+  color: #366EFF;
+  margin: 30px 0 0;
+}
+.container .disabl {
+  opacity: 0.2;
+}
+
+/*# sourceMappingURL=styleContinerAuth.module.css.map */
